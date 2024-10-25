@@ -123,7 +123,15 @@ class BuildYourForm extends React.Component<ITeamProps, ITeamState>
             return;
         }
 
-        if (!link.includes("teams.microsoft.com/")) {
+        try {
+            const url = new URL(link);
+            const allowedHosts = ["teams.microsoft.com"];
+            if (!allowedHosts.includes(url.host)) {
+                this.setState({ open: false });
+                this.props.onPublish(false, this.props.resourceStrings.common.invalidTeamLink);
+                return;
+            }
+        } catch (e) {
             this.setState({ open: false });
             this.props.onPublish(false, this.props.resourceStrings.common.invalidTeamLink);
             return;
