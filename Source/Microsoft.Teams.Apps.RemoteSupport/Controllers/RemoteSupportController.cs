@@ -179,14 +179,14 @@ namespace Microsoft.Teams.Apps.RemoteSupport.Controllers
         {
             try
             {
-                if (onCallSupportDetails == null)
-                {
-                    return this.BadRequest();
-                }
-
                 if (!this.IsUserAuthenticated())
                 {
                     throw new UnauthorizedAccessException("Failed to get fromId from token.");
+                }
+
+                if (onCallSupportDetails == null)
+                {
+                    return this.BadRequest();
                 }
 
                 this.logger.LogInformation("Initiated call to on storage provider service.");
