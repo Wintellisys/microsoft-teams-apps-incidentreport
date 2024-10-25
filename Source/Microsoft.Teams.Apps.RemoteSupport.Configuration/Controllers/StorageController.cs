@@ -69,11 +69,11 @@ namespace Microsoft.Teams.Apps.RemoteSupport.Configuration
                 var result = await this.configurationStorageProvider.StoreOrUpdateEntityAsync(configurationEntity);
                 if (result == null)
                 {
-                    this.logger.LogInformation("Error in saving configurations " + configurationEntity.CreatedByObjectId);
+                    this.logger.LogInformation("Error in saving configurations " + configurationEntity.CreatedByObjectId.Replace(Environment.NewLine, "").Replace("\n", "").Replace("\r", ""));
                     return this.StatusCode(StatusCodes.Status500InternalServerError);
                 }
 
-                this.logger.LogInformation("Configurations saved successfully " + configurationEntity.CreatedByObjectId);
+                this.logger.LogInformation("Configurations saved successfully " + configurationEntity.CreatedByObjectId.Replace(Environment.NewLine, "").Replace("\n", "").Replace("\r", ""));
                 return this.Ok();
             }
             catch (Exception ex)
@@ -94,11 +94,11 @@ namespace Microsoft.Teams.Apps.RemoteSupport.Configuration
             {
                 if (!this.validUsers.Contains(this.HttpContext.User.Identity.Name))
                 {
-                    this.logger.LogInformation("Unauthorized " + this.GetId());
+                    this.logger.LogInformation("Unauthorized " + this.GetId().Replace(Environment.NewLine, "").Replace("\n", "").Replace("\r", ""));
                     return this.Unauthorized();
                 }
 
-                this.logger.LogInformation("Get configurations " + this.GetId());
+                this.logger.LogInformation("Get configurations " + this.GetId().Replace(Environment.NewLine, "").Replace("\n", "").Replace("\r", ""));
                 var result = await this.configurationStorageProvider.GetConfigurationAsync();
                 return this.Ok(result);
             }
